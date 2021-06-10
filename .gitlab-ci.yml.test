@@ -1,0 +1,19 @@
+images: 
+stages:
+  - build
+  - test 
+  - deploy
+
+package the maven project:
+  stage: build
+  script: 
+  - mvn clean package 
+  - echo $CI_COMMIT_SHORT_SHA
+  tag:
+    - george
+    
+  artifacts:
+    paths:
+      - target/*.jar 
+
+  
