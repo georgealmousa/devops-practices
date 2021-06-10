@@ -6,19 +6,19 @@
 
     <groupId>com.progressoft.devops</groupId>
     <artifactId>assignment</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>20210221-b9b52373</version>
 
-    <parents>
+    <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
         <version>2.2.4.RELEASE</version>
-    </parents>
+    </parent>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
-
+    </properties>
     <build>
         <plugins>
             <plugin>
@@ -30,7 +30,7 @@
                 </configuration>
             </plugin>
         </plugins>
-
+     </build>
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -66,7 +66,5 @@
         </dependency>
 
     </dependencies>
-
-    </build>
 
 </project>
