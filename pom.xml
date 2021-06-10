@@ -6,7 +6,7 @@
 
     <groupId>com.progressoft.devops</groupId>
     <artifactId>assignment</artifactId>
-    <version>20210610-654ac8b1</version>
+    <version>${git.commit.time}.${git.commit.id.abbrev}</version>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
@@ -18,9 +18,11 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
         <maven-jar-plugin.version>3.1.0</maven-jar-plugin.version>
+        <timestamp>${maven.build.timestamp}</timestamp>
+        <maven.build.timestamp.format>yyMMdd</maven.build.timestamp.format>
     </properties>
     <build>
-        <plugins>
+        <plugins>   
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -28,6 +30,24 @@
                     <includeSystemScope>true</includeSystemScope>
                     <executable>false</executable>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.0.0</version>
+                <executions>
+                    <execution>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>revision</goal>
+                        </goals>
+                        <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                        <dateFormat>yyMMdd</dateFormat>
+                        <abbrevLength>8</abbrevLength>
+                        <generateGitPropertiesFile>false</generateGitPropertiesFile>
+                    </execution>
+                </executions>
+
             </plugin>
         </plugins>
      </build>
