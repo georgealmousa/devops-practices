@@ -1,10 +1,10 @@
 
 stages:
   - build
-image: alpine:latest
+
 before_script:
   - echo "--------- STARTING WORK ------------"
-  - $(./script.sh) 
+  - sh script.sh 
 variables:
   SCRIPT: $(./script.sh) 
 package the maven project:
