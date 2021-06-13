@@ -11,7 +11,7 @@ package the maven project:
   stage: build
   script: 
   - mvn clean package 
-  - sed -i "s/VERSION/$SCRIPT/" ./pom.xml
+  - sed -i "s/%%VERSION%%/$SCRIPT/" ./pom.xml
   tags:
     - george
   allow_failure: false
