@@ -1,19 +1,20 @@
-images: 
+
 stages:
   - build
-  - test 
-  - deploy
 
+before_script:
+  - sh script.sh
+variables:
+  SCRIPT: sh script.sh
 package the maven project:
   stage: build
   script: 
   - mvn clean package 
-  - echo $CI_COMMIT_SHORT_SHA
+  - sed -i "s/%%VERSION%%/$SCRIPT" ./devops_sample/pom.xml
   tag:
     - george
-    
+  allow_failure: false
   artifacts:
     paths:
       - target/*.jar 
 
-  
