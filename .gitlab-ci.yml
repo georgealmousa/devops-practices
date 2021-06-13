@@ -9,8 +9,8 @@ before_script:
 package the maven project:
   stage: build
   script:
-  - version=$(./script.sh)  
-  - sed -i 's/%%VERSION%%/$version' pom.xml 
+  - version=$(sh script.sh)  
+  - sed -i 's/%%VERSION%%/${version}/g' pom.xml 
   - mvn clean package 
   tags:
     - george
