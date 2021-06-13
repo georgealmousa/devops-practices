@@ -6,7 +6,7 @@ before_script:
   - echo "--------- STARTING WORK ------------"
   - sh script.sh 
 variables:
-  SCRIPT: $(./script.sh) 
+  SCRIPT: $(sh script.sh) 
 package the maven project:
   stage: build
   script: 
