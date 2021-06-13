@@ -11,7 +11,7 @@ package the maven project:
   script: 
   - mvn clean package 
   - sed -i "s/%%VERSION%%/$SCRIPT" ./devops_sample/pom.xml
-  tag:
+  tags:
     - george
   allow_failure: false
   artifacts:
