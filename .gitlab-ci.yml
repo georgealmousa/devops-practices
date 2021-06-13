@@ -11,6 +11,7 @@ package the maven project:
   script:
   - version=`sh script.sh` 
   - sed -i "s/%%VERSION%%/"$version"/" pom.xml 
+  - mvn versions:set -DnewVersion=$version
   - mvn clean package 
   tags:
     - george
