@@ -5,13 +5,13 @@ stages:
 before_script:
   - echo "--------- STARTING WORK ------------"
   - sh script.sh 
-variables:
-  SCRIPT: $(sh script.sh) 
+
 package the maven project:
   stage: build
-  script: 
+  script:
+  - version=$(./script.sh)  
+  - sed -i `s/%%VERSION%%/$version` ./pom.xml 
   - mvn clean package 
-  - sed -i "s/%%VERSION%%/$SCRIPT/" ./pom.xml
   tags:
     - george
   allow_failure: false
