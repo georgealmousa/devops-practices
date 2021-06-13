@@ -3,7 +3,7 @@ stages:
   - build
 
 variables:
-  version:""
+  version: sh script.sh
 
 before_script:
   - echo "--------- STARTING WORK ------------"
@@ -12,7 +12,6 @@ before_script:
 package the maven project:
   stage: build
   script:
-  - version=`sh script.sh` 
   - sed -i "s/%%VERSION%%/"$version"/" pom.xml 
   - mvn versions:set -DnewVersion=$version
   - mvn clean package 
