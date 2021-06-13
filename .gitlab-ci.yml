@@ -3,9 +3,10 @@ stages:
   - build
 
 before_script:
-  - sh script.sh
+  - echo "--------- STARTING WORK ------------"
+  - $(./script.sh) 
 variables:
-  SCRIPT: sh script.sh
+  SCRIPT: $(./script.sh) 
 package the maven project:
   stage: build
   script: 
