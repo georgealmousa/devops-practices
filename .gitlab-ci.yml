@@ -15,7 +15,7 @@ package the maven project:
   - mvn versions:set -DnewVersion=$version
   - mvn clean package 
   tags:
-    - george almousa 
+    - george  
   allow_failure: false
   artifacts:
     paths:
@@ -29,7 +29,7 @@ build the docker image:
     - docker build -t georgealmousa/assignment:$version .
     - docker push georgealmousa/assignment:$version
   tags:
-    - george almousa
+    - george 
   artifacts:  
     paths:
       - target/*.jar 
