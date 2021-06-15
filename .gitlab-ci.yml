@@ -30,5 +30,6 @@ build the docker image:
     - docker push georgealmousa/assignment:$version
   tags:
     - george almousa
-  paths:
-    - target/*.jar 
+  artifacts:  
+    paths:
+      - target/*.jar 
