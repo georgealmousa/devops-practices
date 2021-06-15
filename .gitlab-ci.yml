@@ -1,6 +1,7 @@
 
 stages:
   - build
+  - docker
 
 before_script:
   - echo "--------- STARTING WORK ------------"
@@ -14,9 +15,20 @@ package the maven project:
   - mvn versions:set -DnewVersion=$version
   - mvn clean package 
   tags:
-    - george
+    - george almousa 
   allow_failure: false
   artifacts:
     paths:
       - target/*.jar 
 
+build the docker image:
+  stage: docker
+  script:
+    - version=`sh script.sh`
+    - docker login -u georgemusa -p $docker_pass 
+    - docker build -t georgealmousa/assignment:$version .
+    - docker push georgealmousa/assignment:$version
+  tags:
+    - george almousa
+  paths:
+    - target/*.jar 
