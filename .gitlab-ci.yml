@@ -25,8 +25,8 @@ build the docker image:
   stage: docker
   script:
     - version=`sh script.sh`
-    - docker build -t georgealmousa/assignment:$version .
-    - docker push georgealmousa/assignment:$version
+    - sudo docker build -t georgealmousa/assignment:$version .
+    - sudo docker push georgealmousa/assignment:$version
   tags:
     - george 
   artifacts:  
