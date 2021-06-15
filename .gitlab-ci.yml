@@ -20,7 +20,7 @@ package the maven project:
   artifacts:
     paths:
       - target/*.jar 
-
+# test 
 build the docker image:
   stage: docker
   script:
