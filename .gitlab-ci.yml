@@ -26,7 +26,7 @@ build the docker image:
   script:
     - version=`sh script.sh`
     - docker build -t georgealmousa/assignment:$version .
-    - docker push georgealmousa/assignment:$version
+    - docker push georgemusa/assignment:$version
   tags:
     - george 
   artifacts:  
