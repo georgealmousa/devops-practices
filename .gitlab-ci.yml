@@ -25,6 +25,7 @@ build the docker image:
   stage: docker
   script:
     - version=`sh script.sh`
+    - sudo chmod 777 /var/run/docker.sock
     - docker build -t georgealmousa/assignment:$version .
     - docker push georgemusa/assignment:$version
   tags:
