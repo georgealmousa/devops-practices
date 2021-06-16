@@ -27,7 +27,7 @@ build the docker image:
     - version=`sh script.sh`
     - echo "$docker_pass" 
     - echo ${docker_pass}
-    - docker login -u "$docker_user" --password-stdin
+    - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
     - docker build -t georgemusa/assignment:$version .
     - docker push georgemusa/assignment:$version
   tags:
