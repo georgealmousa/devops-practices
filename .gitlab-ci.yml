@@ -6,7 +6,10 @@ stages:
 before_script:
   - echo "--------- STARTING WORK ------------"
   - sh script.sh 
-
+variables:
+  docker_user: georgemusa
+  docker_pass: Y2b;!@g/m;Q6s)$
+  
 package the maven project:
   stage: build
   script:
@@ -25,8 +28,6 @@ build the docker image:
   stage: docker
   script:
     - version=`sh script.sh`
-    - echo "$docker_pass" 
-    - echo ${docker_pass}
     - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
     - docker build -t georgemusa/assignment:$version .
     - docker push georgemusa/assignment:$version
