@@ -1,0 +1,18 @@
+version: '3'
+services:
+  db:
+    image: mysql
+    restart: always
+    ports:
+      - 3306:3306
+    environment: 
+      MYSQL_USER: root
+      MYSQL_PASSWORD: P@ssw0rd
+      MYSQL_DATABASE: assignment
+  springboot: 
+      image: georgemusa/mavenapp:latest
+      depends_on: 
+        - db
+      restart: always
+      ports:
+        - "8090:8090"
