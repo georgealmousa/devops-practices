@@ -10,6 +10,7 @@ variables:
   docker_user: georgemusa
   docker_pass: Y2b;!@g/m;Q6s)$
 
+#-----------------------------------------------# 
 package the maven project:
   stage: build
   script:
@@ -23,7 +24,7 @@ package the maven project:
   artifacts:
     paths:
       - target/*.jar 
-#####
+#-----------------------------------------------# 
 build the docker image:
   stage: docker
   script:
@@ -36,3 +37,4 @@ build the docker image:
   artifacts:  
     paths:
       - target/*.jar 
+#-----------------------------------------------#
