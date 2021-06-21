@@ -1,29 +1,30 @@
-version: '3.7'
+version: '3'
 
 services: 
     database:
-        container_name: mysql 
-        image: mysql:latest
+        container_name: mysql
+        image: mysql:8.0.19
         restart: always
         ports: 
-            - '3306:3306'
+            - 3306:3306
         environment: 
-            MYSQL_DATABASE: 'assignment'
-            MYSQL_USER: root
-            MYSQL_PASSWORD: P@ssw0rd
+            MYSQL_DATABASE: assignment
+            MYSQL_ROOT_USER: root
+            MYSQL_ROOT_PASSWORD: P@ssw0rd
 
     spring: 
         image: georgemusa/assignment:20210616-2b89db06
         container_name: spring_application
         restart: always
         ports: 
-            - '8080:8080'
+            - 8090:8090
         depends_on: 
             - database
         environment:
+            SPRING_PROFILE: mysql
             SPRING_DATASOURCE_USERNAME: root
-            SPRING_DATASOURCE_USERNAME: P@ssw0rd
-            SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/assignment?allowPublicKeyRetrieval=true
+            SPRING_DATASOURCE_PASSWORD: P@ssw0rd
+            SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/assignment?allowPublicKeyRetrieval=true
 
 
 
