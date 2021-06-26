@@ -6,10 +6,6 @@ stages:
 before_script:
   - echo "--------- STARTING WORK ------------"
   - sh script.sh 
-variables:
-  docker_user: georgemusa
-  docker_pass: Y2b;!@g/m;Q6s)$
-
 #-----------------------------------------------# 
 package the maven project:
   stage: build
