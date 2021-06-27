@@ -13,9 +13,7 @@ services:
             MYSQL_ROOT_PASSWORD: P@ssw0rd
 
     spring: 
-        command: >
-            bash -c "export SCRIPT=$(./script.sh)"
-        image: "georgemusa/assignment:${SCRIPT}"
+        image: "georgemusa/assignment:${TAG}"
         container_name: spring_application
         restart: always
         ports: 
@@ -27,6 +25,3 @@ services:
             SPRING_DATASOURCE_USERNAME: root
             SPRING_DATASOURCE_PASSWORD: P@ssw0rd
             SPRING_DATASOURCE_URL: jdbc:mysql://database:3306/assignment?allowPublicKeyRetrieval=true
-
-
-
