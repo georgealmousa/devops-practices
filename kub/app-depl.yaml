@@ -21,8 +21,8 @@ spec:
               memory: "500mi"
               cpu: "250m"
             limits:
-              memory: "1000mi"
-              cpu: "500m"
+              memory: "1024mi"
+              cpu: "512m"
           env:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:

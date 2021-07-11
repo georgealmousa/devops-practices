@@ -20,6 +20,8 @@ spec:
             - mountPath: /var/lib/mysql
               name: mysql-storage
           env:
+            - name: MYSQL_DATABASE
+              value: assignment
             - name: MYSQL_ROOT_USER 
               valueFrom: 
                 secretKeyRef:
