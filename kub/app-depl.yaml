@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-depl
+spec:
+  replicas: 1 
+  selector:
+    matchLabels: 
+      app: spring-app
+  template:
+    metadata:
+      name: app-pod
+      labels:
+        app: spring-app
+    spec:
+      containers:
+        - name: spring-app
+          image: georgemusa/assignment:20210626-5cb745ed 
+          resources:
+            requests:
+              memory: "500mi"
+              cpu: "250m"
+            limits:
+              memory: "1000mi"
+              cpu: "500m"
+          env:
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-credentials
+                  key: spring_user
+            - name: SPRING_PROFILE
+              value: mysql
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-credentials
+                  key: spring_password
+            - name: SPRING_DATASOURCE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: app-credentials
+                  key: spring_url
+            
+
+
+
