@@ -19,19 +19,20 @@ spec:
           volumeMounts:
             - mountPath: /var/lib/mysql
               name: mysql-storage
+          env:
+            - name: MYSQL_ROOT_USER 
+              valueFrom: 
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: mysql-user
+            - name: MYSQL_ROOT_PASSWORD 
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-credentials
+                  key: mysql-password
       volumes:
         - name: mysql-storage
           persistentVolumeClaim:
             claimName: mysql-pvc
-      env:
-        - name: MYSQL_ROOT_USER 
-          valueFrom: 
-            secretKeyRef:
-              name: mysql-credentials
-              key: mysql-user
-        - name: MYSQL_ROOT_PASSWORD 
-          valueFrom:
-            secretKeyRef:
-              name: mysql-credentials
-              key: mysql-password
+      
     
