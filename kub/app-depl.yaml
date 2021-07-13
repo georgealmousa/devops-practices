@@ -14,25 +14,27 @@ spec:
         app: spring-app
     spec:
       initContainers:
-        - name: initCheck
-          image: busybox
+        - name: init-check
+          image: busybox:1.28
           env:
-            - name: dbCheck
+            - name: db_Check
               valueFrom:
                 configMapKeyRef: 
-                  name: database_configmap
-                  key: Check-Database
-          command: ['sh', '-c', $(dbCheck) ]
+                  name: database-config
+                  key: CHECK_MYSQL
+          command: ['sh', '-c', $(db_Check) ]
       containers:
         - name: spring-app
           image: georgemusa/assignment:20210626-5cb745ed 
+          ports:
+            - containerPort: 8090
           resources:
             requests:
-              memory: "500mi"
-              cpu: "250m"
+              memory: "1024Mi"
+              cpu: "500m"
             limits:
-              memory: "1024mi"
-              cpu: "512m"
+              memory: "2048Mi"
+              cpu: "1000m"
           env:
             - name: SPRING_DATASOURCE_USERNAME
               valueFrom:
@@ -51,6 +53,20 @@ spec:
                 secretKeyRef:
                   name: app-credentials
                   key: spring_url
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8090
+            initialDelaySeconds: 60
+            periodSeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 8090
+            initialDelaySeconds: 60
+            periodSeconds: 10
+                
+
+
             
 
 
