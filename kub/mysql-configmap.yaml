@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: database_configmap
+data:
+  Check-Database: | 
+    while !(mysql-srv ping)
+    do
+      sleep 3
+      echo "waiting for mysql ..."
+    done
+    echo "starting the main script"

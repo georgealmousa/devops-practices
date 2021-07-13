@@ -13,6 +13,16 @@ spec:
       labels:
         app: spring-app
     spec:
+      initContainers:
+        - name: initCheck
+          image: busybox
+          env:
+            - name: dbCheck
+              valueFrom:
+                configMapKeyRef: 
+                  name: database_configmap
+                  key: Check-Database
+          command: ['sh', '-c', $(dbCheck) ]
       containers:
         - name: spring-app
           image: georgemusa/assignment:20210626-5cb745ed 
