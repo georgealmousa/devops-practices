@@ -17,12 +17,12 @@ spec:
         - name: init-check
           image: busybox:1.28
           env:
-            - name: db_Check
+            - name: DATABASE_CHECK
               valueFrom:
                 configMapKeyRef: 
                   name: database-config
                   key: CHECK_MYSQL
-          command: ['sh', '-c', $(db_Check) ]
+          command: ['sh', '-c', $(DATABASE_CHECK) ]
       containers:
         - name: spring-app
           image: georgemusa/assignment:20210626-5cb745ed 
@@ -49,22 +49,21 @@ spec:
                   name: app-credentials
                   key: spring_password
             - name: SPRING_DATASOURCE_URL
-              valueFrom:
-                secretKeyRef:
-                  name: app-credentials
-                  key: spring_url
+              value: jdbc:mysql://database:3306/assignment?allowPublicKeyRetrieval=true
           livenessProbe:
             httpGet:
               path: /actuator/health
               port: 8090
             initialDelaySeconds: 60
             periodSeconds: 10
+            failureThreshold: 5 
           readinessProbe:
             tcpSocket:
               port: 8090
             initialDelaySeconds: 60
             periodSeconds: 10
-                
+            failureThreshold: 5 
+      restartPolicy: Always
 
 
             

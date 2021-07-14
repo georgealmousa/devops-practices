@@ -2,6 +2,8 @@
 stages:
   - build
   - docker
+  - deploy
+  - cleanup
 
 before_script:
   - echo "--------- STARTING WORK ------------"
@@ -34,3 +36,20 @@ build the docker image:
     paths:
       - target/*.jar 
 #-----------------------------------------------#
+deploy the manifest files:
+ stage: deploy
+ script:
+   - version=`sh script.sh` 
+   - kubectl create namespace $version
+   - kubectl apply -f kub --namespace $version
+ tags:
+  - george 
+#-----------------------------------------------#
+cleanup:
+  stage: cleanup
+  tags:
+    - george
+  when: manual
+  script: 
+    - version=`sh script.sh` 
+    - kubectl delete namespace $version
