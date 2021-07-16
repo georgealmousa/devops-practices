@@ -22,10 +22,10 @@ spec:
                 configMapKeyRef: 
                   name: database-config
                   key: CHECK_MYSQL
-          command: ['sh', '-c', $(DATABASE_CHECK) ]
+          # command: ['sh', '-c', $(DATABASE_CHECK) ]
       containers:
         - name: spring-app
-          image: georgemusa/assignment:20210626-5cb745ed 
+          image: georgemusa/assignment:20210626-5cb745ed
           ports:
             - containerPort: 8090
           resources:
@@ -49,7 +49,7 @@ spec:
                   name: app-credentials
                   key: spring_password
             - name: SPRING_DATASOURCE_URL
-              value: jdbc:mysql://database:3306/assignment?allowPublicKeyRetrieval=true
+              value: jdbc:mysql://mysql-srv:3306/assignment?allowPublicKeyRetrieval=true
           livenessProbe:
             httpGet:
               path: /actuator/health
@@ -59,7 +59,7 @@ spec:
             failureThreshold: 5 
           readinessProbe:
             tcpSocket:
-              port: 8090
+              port: 8090  
             initialDelaySeconds: 60
             periodSeconds: 10
             failureThreshold: 5 
