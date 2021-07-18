@@ -13,15 +13,15 @@ spec:
       labels:
         app: spring-app
     spec:
-      initContainers:
-        - name: init-check
-          image: busybox:1.28
-          env:
-            - name: DATABASE_CHECK
-              valueFrom:
-                configMapKeyRef: 
-                  name: database-config
-                  key: CHECK_MYSQL
+      # initContainers:
+      #   - name: init-check
+      #     image: busybox:1.28
+      #     env:
+      #       - name: DATABASE_CHECK
+      #         valueFrom:
+      #           configMapKeyRef: 
+      #             name: database-config
+      #             key: CHECK_MYSQL
           # command: ['sh', '-c', $(DATABASE_CHECK) ]
       containers:
         - name: spring-app
@@ -37,19 +37,24 @@ spec:
               cpu: "1000m"
           env:
             - name: SPRING_DATASOURCE_USERNAME
-              valueFrom:
-                secretKeyRef:
-                  name: app-credentials
-                  key: spring_user
+              value: root
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: app-credentials
+              #     key: spring_user
             - name: SPRING_PROFILE
               value: mysql
             - name: SPRING_DATASOURCE_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: app-credentials
-                  key: spring_password
+              value: P@ssw0rd
+              # valueFrom:
+              #   secretKeyRef:
+              #     name: app-credentials
+              #     key: spring_password
             - name: SPRING_DATASOURCE_URL
               value: jdbc:mysql://mysql-srv:3306/assignment?allowPublicKeyRetrieval=true
+            - name: SPRING_PROFILE_ACTIVE
+              value: " "
+
           livenessProbe:
             httpGet:
               path: /actuator/health
@@ -64,9 +69,5 @@ spec:
             periodSeconds: 10
             failureThreshold: 5 
       restartPolicy: Always
-
-
-            
-
 
 
