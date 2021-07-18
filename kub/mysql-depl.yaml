@@ -9,7 +9,7 @@ spec:
       app: mysql
   template:
     metadata:
-      name: mysql-pod
+      name: mysql
       labels:
         app: mysql
     spec: 
@@ -22,7 +22,7 @@ spec:
           env:
             - name: MYSQL_DATABASE
               value: assignment
-            - name: MYSQL_ROOT_USER 
+            - name: MYSQL_ROOT_USER
               valueFrom: 
                 secretKeyRef:
                   name: mysql-credentials
