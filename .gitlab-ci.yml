@@ -40,8 +40,8 @@ deploy the manifest files:
  stage: deploy
  script:
    - version=`sh script.sh` 
-   - kubectl create namespace $version
-   - kubectl apply -f kub --namespace $version
+   - kubectl create namespace 20210626-5cb745ed
+   - kubectl apply -f kub --namespace 20210626-5cb745ed
  tags:
   - georgevm
 #-----------------------------------------------#
