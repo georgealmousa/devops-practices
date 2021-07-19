@@ -40,8 +40,8 @@ deploy the manifest files:
  stage: deploy
  script:
    - version=`sh script.sh` 
-   - kubectl create namespace 20210626-5cb745ed --port 16443
-   - kubectl apply -f kub --namespace 20210626-5cb745ed --port 16443
+   - kubectl create namespace 20210626-5cb745ed 
+   - kubectl apply -f kub --namespace 20210626-5cb745ed 
  tags:
   - georgevm
 #-----------------------------------------------#
