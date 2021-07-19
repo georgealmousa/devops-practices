@@ -19,4 +19,3 @@ spec:
                 number: 8090
 
 # kubectl port-forward -n app spring-app-6b49bf4494-8hd8g 8090          
-#networking.k8s.io/v1
