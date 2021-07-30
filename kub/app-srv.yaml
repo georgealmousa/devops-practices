@@ -5,14 +5,12 @@ metadata:
   labels:
     app: spring-srv
 spec:
+  type: LoadBalancer
   selector:
     app: spring-app
   ports:
     - port: 8090
       targetPort: 8090
-status:
-  loadBalancer: {}
-  
 
       
 

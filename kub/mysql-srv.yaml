@@ -5,11 +5,10 @@ metadata:
   labels:
     app: mysql-srv
 spec:
+  type: ClusterIP
   selector:
     app: mysql
   ports:
     - port: 3306
-  type: ClusterIP
-
 
 
