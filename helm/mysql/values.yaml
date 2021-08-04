@@ -2,7 +2,7 @@
 ## ref: https://hub.docker.com/r/library/mysql/tags/
 ##
 image: "mysql"
-imageTag: "5.7.30"
+imageTag: "8.0.19"
 
 strategy:
   type: Recreate
@@ -187,6 +187,7 @@ service:
   annotations: {}
   ## Specify a service type
   ## ref: https://kubernetes.io/docs/concepts/services-networking/service/#publishing-services---service-types
+  name: spring-srv
   type: ClusterIP
   port: 3306
   # nodePort: 32000
@@ -244,3 +245,9 @@ initContainer:
     requests:
       memory: 10Mi
       cpu: 10m
+
+PersistentVolumeClaim: 
+  name: mysql-pvc
+
+PersistentVolume:
+  name: pvc-8fe3b7a9-d70b-4472-b117-ef355000b94d
