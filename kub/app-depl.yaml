@@ -28,7 +28,7 @@ spec:
       #       - $(CHECK_MYSQL)
       containers:
         - name: spring-app
-          image: georgemusa/assignment:20210626-5cb745ed
+          image: georgemusa/assignment:20210815-b2f25830
           ports:
             - containerPort: 8090
           resources:

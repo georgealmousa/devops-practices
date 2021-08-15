@@ -38,9 +38,8 @@ build the docker image:
 deploy the manifest files:
  stage: deploy
  script:
-   - version=`sh script.sh` 
-   - kubectl create namespace 20210626-5cb745ed 
-   - kubectl apply -f kub --namespace 20210626-5cb745ed 
+   - kubectl create namespace 20210815-b2f25830
+   - kubectl apply -f kub --namespace 20210815-b2f25830 
  tags:
   - georgevm
 #-----------------------------------------------#
@@ -51,5 +50,5 @@ cleanup:
   when: manual
   script: 
     - version=`sh script.sh` 
-    - kubectl delete namespace $version
+    - kubectl delete namespace 20210815-b2f25830
 
