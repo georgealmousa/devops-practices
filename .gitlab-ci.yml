@@ -52,4 +52,4 @@ cleanup:
   script: 
     - version=`sh script.sh` 
     - kubectl delete namespace $version
-#test
+
