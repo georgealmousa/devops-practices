@@ -38,8 +38,10 @@ build the docker image:
 deploy the manifest files:
  stage: deploy
  script:
+   - cd kub
    - kubectl create namespace 20210815-b2f25830
-   - kubectl apply -f kub --namespace 20210815-b2f25830 
+   - kubectl apply -f . --namespace 20210815-b2f25830
+   - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
  tags:
   - georgevm
 #-----------------------------------------------#
