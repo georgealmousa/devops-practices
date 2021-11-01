@@ -16,7 +16,7 @@ package:
   - mvn versions:set -DnewVersion=$version
   - mvn clean package 
   tags:
-    - vm 
+    - georgevm 
   allow_failure: false
   artifacts:
     paths:
@@ -30,7 +30,7 @@ docker:
     - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
     - docker push georgemusa/assignment:$version
   tags:
-    - vm
+    - georgevm
   artifacts:  
     paths:
       - target/*.jar 
@@ -43,12 +43,12 @@ deploy:
    - kubectl apply -f . --namespace 20210815-b2f25830
    - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
  tags:
-  - vm
+  - georgevm
 #-----------------------------------------------#
 cleanup:
   stage: cleanup
   tags:
-    - vm
+    - georgevm
   when: manual
   script: 
     - version=`sh script.sh` 
