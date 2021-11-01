@@ -16,7 +16,7 @@ package the maven project:
   - mvn versions:set -DnewVersion=$version
   - mvn clean package 
   tags:
-    - georgevm 
+    - vm 
   allow_failure: false
   artifacts:
     paths:
@@ -30,7 +30,7 @@ build the docker image:
     - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
     - docker push georgemusa/assignment:$version
   tags:
-    - georgevm
+    - vm
   artifacts:  
     paths:
       - target/*.jar 
@@ -43,12 +43,12 @@ deploy the manifest files:
    - kubectl apply -f . --namespace 20210815-b2f25830
    - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
  tags:
-  - georgevm
+  - vm
 #-----------------------------------------------#
 cleanup:
   stage: cleanup
   tags:
-    - georgevm
+    - vm
   when: manual
   script: 
     - version=`sh script.sh` 
