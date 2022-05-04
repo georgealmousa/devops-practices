@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: database-config
-data:
-  CHECK_MYSQL: |-
-    until nc -vz mysql 3306; do echo waiting for mysql database; sleep 5; done
-
-    

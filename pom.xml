@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.progressoft.devops</groupId>
     <artifactId>assignment</artifactId>
-    <version>%%VERSION%%</version>
+    <version>20220422-1d9169c8</version>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>

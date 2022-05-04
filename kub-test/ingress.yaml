@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1 
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.class: public 
+    # nginx.ingress.kubernetes.io/use-regex: 'true'  
+spec:
+  tls:
+    - hosts:
+        - myapp.local
+      secretName: tls-secret
+  rules:
+    - host: myapp.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: app-srv
+                port: 
+                  number: 8090
+

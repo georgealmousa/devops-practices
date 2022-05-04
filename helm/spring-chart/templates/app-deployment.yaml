@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app-dep
+  name: {{ .Release.Name }}-spring
+  namespace: default
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: app-dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app-dep
+    spec: 
+      volumes:
+      - name: config-vol
+        configMap:
+          name: {{ .Release.Name }}-cm
+      initContainers: 
+        - name: init-myservice
+          image: busybox:1.31
+          command: ['sh', '-c','while ! nc -z mysql 3306; do sleep 1; printf "-"; done; echo -e "  >> MySQL DB Server has started";']
+        # command: ['sh','-c','until nc -vz mysql 3306; do echo waiting for mysql database; sleep 5; done']
+      containers:
+      - image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        name: assignment
+        ports:
+        - containerPort: {{ .Values.service.targetPort }}
+        volumeMounts:
+        - name: config-vol
+          mountPath: /etc/config
+        env: 
+        - name: SPRING_PROFILE
+          value: mysql
+        - name: SPRING_DATASOURCE_USERNAME
+          value: root
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql:3306/assignment?allowPublicKeyRetrieval=true
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: SPRING_DATASOURCE_PASSWORD
+        resources: 
+          requests: 
+            memory: {{ .Values.resources.requests.memory }}
+            cpu: {{ .Values.resources.requests.cpu }}
+          limits: 
+            memory: {{ .Values.resources.limits.memory }}
+            cpu: {{ .Values.resources.limits.cpu }} 
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe: 
+          tcpSocket:
+            port: {{ .Values.service.port }}  
+          initialDelaySeconds: 60
+          periodSeconds: 10
+      restartPolicy: Always
+
+status: {}

@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: app-dep
+  name: app-dep
+  namespace: default
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-dep
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: app-dep
+    spec: 
+      volumes:
+      - name: config-vol
+        configMap:
+          name: log-config
+          items:
+          - key: log_level
+            path: log_level
+      initContainers: 
+        - name: init-myservice
+          image: busybox:1.31
+          command: ['sh', '-c', 'scripts/checkdatabase.sh']
+        # command: ['sh','-c','until nc -vz mysql 3306; do echo waiting for mysql database; sleep 5; done']
+      containers:
+      - image: georgemusa/assignment:20210815-b2f25830
+        name: assignment
+        ports:
+        - containerPort: 8090
+        volumeMounts:
+        - name: config-vol
+          mountPath: /etc/config
+        env: 
+        - name: SPRING_PROFILE
+          value: mysql
+        - name: SPRING_DATASOURCE_USERNAME
+          value: root
+        - name: SPRING_DATASOURCE_URL
+          value: jdbc:mysql://mysql:3306/assignment?allowPublicKeyRetrieval=true
+        - name: SPRING_DATASOURCE_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: app-secret
+              key: SPRING_DATASOURCE_PASSWORD
+        resources: 
+          requests: 
+            memory: "124Mi"
+            cpu: "250m"
+          limits: 
+            memory: "248Mi"
+            cpu: "500m" 
+        livenessProbe:
+          httpGet:
+            path: /actuator/health
+            port: http
+          initialDelaySeconds: 60
+          periodSeconds: 10
+        readinessProbe: 
+          tcpSocket:
+            port: 8090  
+          initialDelaySeconds: 60
+          periodSeconds: 10
+      restartPolicy: Always
+
+status: {}

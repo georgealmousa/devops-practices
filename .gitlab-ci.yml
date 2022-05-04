@@ -1,56 +1,62 @@
 stages:
-  - build
-  - docker
+  # - build
+  # - docker
   - deploy
   - cleanup
 
-before_script:
-  - echo "--------- STARTING WORK ------------"
-  - sh script.sh 
+# before_script:
+#   - echo "--------- STARTING WORK ------------"
+#   - sh script.sh 
 #-----------------------------------------------# 
-package:
-  stage: build
-  script:
-  - version=`sh script.sh` 
-  - sed -i "s/%%VERSION%%/"$version"/" pom.xml 
-  - mvn versions:set -DnewVersion=$version
-  - mvn clean package 
-  tags:
-    - georgevm 
-  allow_failure: false
-  artifacts:
-    paths:
-      - target/*.jar 
-#-----------------------------------------------# 
-docker:
-  stage: docker
-  script:
-    - version=`sh script.sh`
-    - docker build -t georgemusa/assignment:$version .
-    - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
-    - docker push georgemusa/assignment:$version
-  tags:
-    - georgevm
-  artifacts:  
-    paths:
-      - target/*.jar 
+# package:
+#   stage: build
+#   script:
+#   - version=`sh script.sh` 
+#   - sed -i "s/%%VERSION%%/"$version"/" pom.xml 
+#   - mvn versions:set -DnewVersion=$version
+#   - mvn clean package 
+#   tags:
+#     - georgevm 
+#   allow_failure: false
+#   artifacts:
+#     paths:
+#       - target/*.jar 
+# #-----------------------------------------------# 
+# docker:
+#   stage: docker
+#   script:
+#     - version=`sh script.sh`
+#     - docker build -t georgemusa/assignment:$version .
+#     - echo "$docker_pass" | docker login -u "$docker_user" --password-stdin
+#     - docker push georgemusa/assignment:$version
+#   tags:
+#     - georgevm
+#   artifacts:  
+#     paths:
+#       - target/*.jar 
 #-----------------------------------------------#
 deploy:
  stage: deploy
  script:
-   - cd kub
-   - kubectl create namespace 20210815-b2f25830
-   - kubectl apply -f . --namespace 20210815-b2f25830
-   - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
+  #  - cd kub
+  #  - kubectl create namespace 20210815-b2f25830
+  #  - kubectl apply -f . -n 20210815-b2f25830
+  #  - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
+    - cd helm
+    - helm install mysql ./mysql
+    - helm install springapp ./spring-chart
+
  tags:
-  - georgevm
+  - local-runner
 #-----------------------------------------------#
 cleanup:
   stage: cleanup
   tags:
-    - georgevm
+    - local-runner
   when: manual
   script: 
-    - version=`sh script.sh` 
-    - kubectl delete namespace 20210815-b2f25830
+    - cd helm 
+    # - kubectl delete namespace 20210815-b2f25830
+    - helm uninstall mysql 
+    - helm uninstall springapp
 
