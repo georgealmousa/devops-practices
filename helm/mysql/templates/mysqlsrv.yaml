@@ -9,13 +9,6 @@ metadata:
   resourceVersion: "2008"
   uid: 226fcc9e-f742-4087-9eed-6a5bc041b14a
 spec:
-  clusterIP: 10.43.17.36
-  clusterIPs:
-  - 10.43.17.36
-  internalTrafficPolicy: Cluster
-  ipFamilies:
-  - IPv4
-  ipFamilyPolicy: SingleStack
   ports:
   - port: {{ .Values.service.port }}
     protocol: TCP
