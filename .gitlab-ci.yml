@@ -42,9 +42,8 @@ deploy:
   #  - kubectl create namespace 20210815-b2f25830
   #  - kubectl apply -f . -n 20210815-b2f25830
   #  - kubectl create secret tls devops-tls --key key.key  --cert cert.crt -n 20210815-b2f25830 
-    - cd helm
-    - helm install mysql ./mysql
-    - helm install springapp ./spring-chart
+    - helm install mysql helm/mysql
+    - helm install springapp helm/spring-chart
 
  tags:
   - local-runner
